@@ -7,13 +7,13 @@ node('docker') {
 
     stage 'Build'
     // Build Docker image
-    def image = docker.build("$env.PROJECT_NAME-$env.BRANCH_NAME:${env.BUILD_NUMBER}")
+   docker.build("$env.PROJECT_NAME-$env.BRANCH_NAME:${env.BUILD_NUMBER}")
 
     stage 'Test'
     stage 'Production'
     // Tag image as latest if builds are build from master
     if ("master".equalsIgnoreCase("$env.BRANCH_NAME")) {
-        image.tag("$env.PROJECT_NAME:${env.BUILD_NUMBER}")
+        docker.build("$env.PROJECT_NAME:${env.BUILD_NUMBER}")
     }
 }
 
