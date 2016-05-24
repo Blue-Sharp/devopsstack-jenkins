@@ -8,12 +8,14 @@ node('docker') {
     stage 'Build'
     // Build Docker image
    docker.build("$env.PROJECT_NAME-$env.BRANCH_NAME:${env.BUILD_NUMBER}")
+   docker.build("$env.PROJECT_NAME-$env.BRANCH_NAME:latest")
 
     stage 'Test'
     stage 'Production'
     // Tag image as latest if builds are build from master
     if ("master".equalsIgnoreCase("$env.BRANCH_NAME")) {
         docker.build("$env.PROJECT_NAME:${env.BUILD_NUMBER}")
+        docker.build("$env.PROJECT_NAME:latest")
     }
 }
 
